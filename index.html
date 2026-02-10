@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamza Wedding</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper-green': '#5d7052',
+                        'paper-dark': '#3a4a31',
+                        'seal-cream': '#f2f0e6',
+                        'gold-accent': '#d4af37',
+                    },
+                    fontFamily: {
+                        'script': ['"Great Vibes"', 'cursive'],
+                        'engraved': ['"Cinzel Decorative"', 'serif'],
+                        'body': ['"Playfair Display"', 'serif'], 
+                        'sans': ['"Lato"', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* =========================================
+           PART 1: COVER STYLES
+           ========================================= */
+        .bg-texture {
+            background-color: #5d7052;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.6);
+        }
+        .envelope-flap {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 150%; height: 55vh;
+            background: linear-gradient(to bottom right, transparent 49%, rgba(0,0,0,0.3) 50%, transparent 51%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%); pointer-events: none; z-index: 10;
+        }
+        .gold-lock {
+            background: conic-gradient(from 0deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c, #bf953f);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 2px 2px 5px rgba(255,255,255,0.7), inset -2px -2px 5px rgba(0,0,0,0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gold-lock:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .text-engraved { color: #745418; text-shadow: 1px 1px 0px rgba(255,255,255,0.5), -1px -1px 1px rgba(0,0,0,0.2); }
+        .embossed-svg { fill: none; stroke: rgba(0,0,0,0.2); stroke-width: 2; filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.15)); }
+        .slide-up { transform: translateY(-100%); transition: transform 1.2s cubic-bezier(0.7, 0, 0.2, 1); }
+
+        /* =========================================
+           PART 2: CONTENT STYLES
+           ========================================= */
+        body { font-family: 'Playfair Display', serif; background: #000; color: #fff; overflow: hidden; }
+        .snap-container { height: 100vh; width: 100%; overflow-y: scroll; scroll-snap-type: y mandatory; opacity: 0; transition: opacity 1s ease 0.6s; }
+        .show-content { opacity: 1; }
+        section { height: 100vh; width: 100%; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; position: relative; background-size: cover; background-position: center; }
+        h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 400; line-height: 1.1; text-shadow: 0 2px 5px rgba(0,0,0,0.5); text-align: center; color: #d4af37; }
+        p { font-family: 'Lato', sans-serif; line-height: 1.6; font-size: 1rem; text-align: center; }
+        .divider { width: 60px; height: 1px; margin: 20px auto; opacity: 0.7; background: #fff; }
+
+        .pretty-card {
+            background: rgba(20, 20, 20, 0.65); backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.3); padding: 50px 30px;
+            max-width: 550px; width: 90%; text-align: center; border-radius: 4px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7); position: relative;
+        }
+        .pretty-card::after {
+            content: ''; position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.2); pointer-events: none;
+        }
+        .pretty-card h2 { font-family: 'Cinzel Decorative', serif; font-size: 2.8rem; color: #e6c268; margin-bottom: 10px; letter-spacing: 2px; }
+        .pretty-divider { color: #d4af37; font-size: 1.5rem; margin: 15px 0 25px 0; opacity: 0.8; }
+        .info-group { margin-bottom: 20px; }
+        .info-label { font-family: 'Lato', sans-serif; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 3px; color: #aaa; margin-bottom: 4px; display: block; }
+        .info-value { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; letter-spacing: 0.5px; }
+
+        /* --- SECTION STYLES --- */
+        #sec-intro { 
+            background-color: #222; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('pic.jpg'); 
+            color: #fff;
+            justify-content: flex-start;
+            padding-top: 55vh; 
+        }
+        #sec-intro h2 { text-shadow: 0 2px 10px rgba(0,0,0,0.8); color: #fff; }
+        #sec-intro .unit-number { color: #d4af37; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        #sec-intro .divider { background: #d4af37; }
+        .countdown-wrapper { margin-top: 30px; }
+        #countdown { display: flex; justify-content: center; gap: 15px; margin-top: 20px;}
+        .time-unit { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
+        .unit-number { font-size: 2.2rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+        .unit-label { font-family: 'Lato', sans-serif; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: #ccc; }
+        
+        #sec-mehendi { background-color: #d8a800; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('pica.jpg'); }
+        #sec-baraat { background-color: #800000; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('picb.jpg'); }
+        #sec-waleema { background-color: #333; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('picc.jpg'); }
+
+        #sec-hosts {
+            background-color: #1a1a1a;
+            background-image: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.9) 100%), url('image_2.png');
+            background-position: center 30%;
+            background-size: cover;
+            justify-content: flex-end;
+            padding-bottom: 12vw; 
+        }
+        .hosts-container {
+            background: rgba(0, 0, 0, 0.5); 
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 780px; 
+            width: 95%;
+        }
+#sec-thanks {
+    background-color: #000;
+    /* Use an existing wedding image or pic.jpg as background */
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('tas.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.thanks-card {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 60px 40px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+        .host-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: #f2f0e6; margin-bottom: 4px; line-height: 1.2; }
+        .host-name.highlight { color: #d4af37; font-weight: 600; font-size: 0.95rem; }
+
+        .scroll-hint { position: absolute; bottom: 30px; font-size: 1.5rem; animation: float 2s infinite; opacity: 0.6; color: #d4af37;}
+        @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(10px);} }
+    </style>
+</head>
+<body class="bg-black overflow-hidden h-screen w-full relative">
+
+    <div id="cover" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-texture overflow-hidden">
+        <div class="envelope-flap"></div>
+        <svg class="absolute top-10 -left-10 w-64 h-64 embossed-svg opacity-40 rotate-12" viewBox="0 0 100 100"><path d="M50 50 Q30 20 50 5 M50 50 Q70 20 50 5 M50 50 Q20 40 10 50 M50 50 Q20 60 10 50 M50 50 Q80 40 90 50 M50 50 Q80 60 90 50 M50 50 Q40 80 50 95 M50 50 Q60 80 50 95" /></svg>
+        <svg class="absolute bottom-10 -right-10 w-80 h-80 embossed-svg opacity-40 -rotate-12" viewBox="0 0 100 100"><path d="M50 100 Q 50 10 50 10" /><path d="M50 40 Q 20 20 30 10 Q 50 30 50 40" /><path d="M50 60 Q 80 40 90 50 Q 60 70 50 60" /></svg>
+        
+        <div class="relative z-20 flex flex-col items-center w-full max-w-md px-6">
+            <div class="text-center mb-8">
+                <p class="font-script text-2xl text-seal-cream/80 tracking-wide drop-shadow-md">An invitation for</p>
+                <h2 class="font-script text-6xl text-gold-accent mt-1 drop-shadow-lg transform -rotate-2 mb-6">Ch Wajid Mehmood</h2>
+                <p class="font-sans uppercase tracking-widest text-xs text-white/60 mb-2">to celebrate</p>
+                <h3 class="font-engraved text-2xl text-white">Hamza's Wedding</h3>
+            </div>
+
+            <div id="lock-btn" class="cursor-pointer group relative">
+                <div class="gold-lock w-36 h-36 rounded-full flex flex-col items-center justify-center relative animate-pulse-slow group-hover:animate-none">
+                    <div class="absolute inset-2 rounded-full border border-[#aa771c] opacity-30"></div>
+                    <div class="absolute inset-3 rounded-full border border-[#ffeb3b] opacity-40"></div>
+                    <h1 class="font-engraved text-4xl text-engraved pt-1">H<span class="text-2xl">&</span>A</h1>
+                    <div class="mt-2 w-3 h-5 bg-[#3a2805] rounded-t-full relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.8)]"><div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#3a2805] rounded-full clip-triangle"></div></div>
+                </div>
+                <p class="absolute -bottom-10 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-white/50 whitespace-nowrap opacity-100">Click to Unlock</p>
+            </div>
+             <p class="font-script text-2xl text-white/60 mt-16 text-center">Prepared exclusively for you</p>
+        </div>
+    </div>
+
+    <main class="snap-container hidden" id="main-content">
+        
+        <section id="sec-intro">
+            <h2>A Joyous Union</h2>
+            <div class="divider"></div>
+            <p style="color: #eee; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">To Celebrate Hamza and Aiza's Wedding.<br>We count the days until the festivities begin.</p>
+            <div class="countdown-wrapper">
+                <div id="countdown">
+                    <div class="time-unit"><span class="unit-number" id="months">0</span><span class="unit-label">Months</span></div>
+                    <div class="time-unit"><span class="unit-number" id="days">0</span><span class="unit-label">Days</span></div>
+                    <div class="time-unit"><span class="unit-number" id="hours">0</span><span class="unit-label">Hours</span></div>
+                    <div class="time-unit"><span class="unit-number" id="minutes">0</span><span class="unit-label">Mins</span></div>
+                    <div class="time-unit"><span class="unit-number" style="color: #ccc;" id="seconds">0</span><span class="unit-label">Secs</span></div>
+                </div>
+            </div>
+            <div class="scroll-hint">↓</div>
+        </section>
+
+        <section id="sec-mehendi">
+            <div class="pretty-card">
+                <h2>Mehendi</h2>
+                <div class="pretty-divider">❖</div>
+                <p class="italic mb-6 opacity-90 -mt-7">A vibrant night of colors, music, and festivities.</p>
+                <div class="info-group"><span class="info-label">Date & Time</span><div class="info-value">March 24, 2026 | 07:00 PM</div></div>
+                <div class="info-group"><span class="info-label">Venue</span><div class="info-value">Noor Mahal, Islamabad</div></div>
+                
+                <div class="mt-6 border-t border-gold-accent/20 pt-4">
+                    <span class="info-label">Young Hosts</span>
+                    <div style="transform: scale(0.75); transform-origin: center top; color: #fff; font-family: 'Playfair Display', serif; line-height: 1;">
+                        <p>Fahad Abbasi &bull; Hashim &bull; Aryan &bull; Murtaza</p>
+                        <p>Yousaf &bull; Subhan &bull; Sultan &bull; Zain</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-baraat">
+            <div class="pretty-card">
+                <h2>Barat</h2>
+                <div class="pretty-divider">❖</div>
+                <p class="italic mb-6 opacity-90 -mt-7">The grand arrival and wedding ceremony.</p>
+                <div class="info-group"><span class="info-label">Date & Time</span><div class="info-value">March 29, 2026 | 12:00 PM</div></div>
+                <div class="info-group"><span class="info-label">Venue</span><div class="info-value">Rosemary Marquee, Bahria Town</div></div>
+                
+                <div class="mt-6 border-t border-gold-accent/20 pt-4">
+                    <span class="info-label">Schedule</span>
+                    <div class="info-value text-sm sm:text-base leading-relaxed">
+                        <p>12:00 PM &bull; Sehra Bandi</p>
+                        <p>01:00 PM &bull; Departure of Barat</p>
+                        <p>03:00 PM &bull; Lunch</p>
+                        <p>04:00 PM &bull; Ruksati</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-waleema">
+            <div class="pretty-card">
+                <h2>Walima</h2>
+                <div class="pretty-divider">❖</div>
+                <p class="italic mb-6 opacity-90">Celebrating the new beginning with a royal feast.</p>
+                <div class="info-group"><span class="info-label">Date & Time</span><div class="info-value">March 31, 2026 | 08:00 PM</div></div>
+                <div class="info-group"><span class="info-label">Venue</span><div class="info-value">Noor Mahal Marquee, Islamabad</div></div>
+            </div>
+        </section>
+
+        <section id="sec-hosts">
+            <div class="hosts-container text-center">
+                <h2 style="font-family: 'Cinzel Decorative', serif; color: #e6c268; font-size: 1.5rem; margin-bottom: 10px;">With Gratitude</h2>
+                <div class="pretty-divider" style="margin: 5px 0 15px 0; font-size: 1rem;">❖</div>
+                <p class="italic mb-4 text-sm opacity-90">We look forward to sharing this joyous occasion with you.</p>
+                
+                <span class="info-label" style="margin-bottom: 10px; letter-spacing: 2px; font-size: 0.6rem;">Hosted By The Family of</span>
+
+                <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                    <div class="text-right space-y-1 border-r border-gold-accent/30 pr-4">
+                        <p class="host-name">Ch Tanveer Ahmed</p>
+                        <p class="host-name">Ch Sajjid Mehmood</p>
+                        <p class="host-name">Ch Amjad Mehmood</p>
+                        <p class="host-name">Ch Wajat Mehmood</p>
+                        <p class="host-name">Ch Nasir Mehmood</p>
+                        <p class="host-name">Asim Naseer Abassi</p>
+                        <p class="host-name">Qasim Naseer Abassi</p>
+                    </div>
+                    <div class="text-left space-y-1 pl-2">
+                        <p class="host-name">Ch Adeel Ahmed</p>
+                        <p class="host-name">Ch Azmat Yasin</p>
+                        <p class="host-name">Ch Badar Yasin</p>
+                        <p class="host-name">Ch Adnan Maskeen</p>
+                        <p class="host-name">Ch Hamid Rahim</p>
+                        <p class="host-name">Ch Nabeel Ahmad</p>
+                        <p class="host-name">Ch Abdulrehman</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+<section id="sec-thanks">
+    <div class="thanks-card text-center">
+        <p class="font-sans uppercase tracking-[4px] text-[0.7rem] mb-6 text-gold-accent">We look forward to seeing you</p>
+        <h2 class="font-script text-6xl text-white drop-shadow-lg mb-4">Thank You</h2>
+        <div class="divider mx-auto" style="background: #d4af37; width: 40px; margin: 20px auto;"></div>
+        <p class="font-body italic text-xl text-seal-cream/90 leading-relaxed">
+            With Prayers & Love,<br>
+            <span class="font-sans not-italic uppercase tracking-widest text-sm mt-4 block">The Family</span>
+        </p>
+    </div>
+</section>
+
+    </main>
+
+    <script>
+        const lockBtn = document.getElementById('lock-btn');
+        const cover = document.getElementById('cover');
+        const mainContent = document.getElementById('main-content');
+
+        lockBtn.addEventListener('click', () => {
+            mainContent.classList.remove('hidden');
+            cover.classList.add('slide-up');
+            setTimeout(() => {
+                mainContent.classList.add('show-content');
+            }, 50);
+        });
+
+        const TARGET_DATE_STR = "March 24, 2026 12:00:00"; 
+        
+        const targetDate = new Date(TARGET_DATE_STR).getTime();
+        function updateCountdown() {
+            const now = new Date();
+            const target = new Date(targetDate);
+            let diff = target - now;
+            if (diff <= 0) { document.getElementById("countdown").innerHTML = "The Celebration Begins!"; return; }
+
+            let months = (target.getFullYear() - now.getFullYear()) * 12 + (target.getMonth() - now.getMonth());
+            if (target.getDate() < now.getDate()) months--;
+            
+            let tempDate = new Date(now);
+            tempDate.setMonth(now.getMonth() + months);
+            
+            let remainingDiff = target - tempDate;
+            const days = Math.floor(remainingDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remainingDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingDiff % (1000 * 60)) / 1000);
+
+            document.getElementById("months").innerText = months < 0 ? 0 : months;
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
